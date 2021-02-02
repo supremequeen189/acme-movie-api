@@ -1,5 +1,15 @@
+const { config } = require('chai');
 const Sequelize = require('sequelize');
 const { STRING } = Sequelize;
+
+if (process.env.SSL) {
+    config.dialectOptions = {
+        ssl: {
+            rejectUnauthorized: false
+        }
+    };
+}
+
 const conn = new Sequelize(process.env.DATABASE_URL || 'postgres://localhost/acme_db');
 
 const Movie = conn.define('movie', {
